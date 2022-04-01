@@ -4,33 +4,57 @@
  * @return {number[][]}
  */
 var combinationSum2 = function(candidates, target) {
-  let result = [];
-  getCombination(candidates, target, result, []);
-  return result;
-};
-
-function getCombination(nums, target, result, subResult) {
-  for (let i = 0; i < nums.length; ++i) {
-    let difference = target - nums[i];
-    // console.log('difference: ', difference);
-    if (difference < 0 && i === nums.length - 1) {
-      subResult.pop();
-    } else if (difference > 0) {
-      subResult.push(nums[i]);
-      console.log('>>> ', nums[i], subResult, [...nums.slice(i + 1)], difference);
-      // console.log([...nums.slice(0, i), ...nums.slice(i + 1)]);
-      getCombination([...nums.slice(i + 1)], difference, result, subResult);
-    } else if (difference === 0) {
-      subResult.push(nums[i]);
-      console.log('== 0', nums[i], subResult);
-      result.push(subResult);
-      console.log('result: ', result);
-      // subResult = [];
-      subResult.pop();
-      subResult.pop();
+  let comb = [];
+  let results = [];
+  let counter = {};
+  for (let i = 0; i < candidates.length; ++i) {
+    if (!counter[candidates[i]]) {
+      counter[candidates[i]] = 1;
+    } else {
+      counter[candidates[i]] += 1;
     }
   }
-}
+  let counterList = [];
+  Object.entries(counter).forEach(([a, b]) => {
+    counterList.push([Number(a), b]);
+  });
+
+  const backtrack = function(remain, curr, counter) {
+    if (remain <= 0) {
+      if (remain === 0) {
+        // Important, must push a copied array, not the reference to the array
+        results.push(comb.slice());
+      }
+      return;
+    }
+
+    for (let nextCurr = curr; nextCurr < counter.length; ++nextCurr) {
+      let entry = counter[nextCurr];
+      let candidate = entry[0];
+      let freq = entry[1];
+
+      if (freq < 0) {
+        continue;
+      }
+
+      // add new element to the current combination
+      // console.log('result: ', results);
+      comb.push(candidate);
+      counter[nextCurr] = [candidate, freq - 1];
+
+      // continue the exploration with the updated combination
+      backtrack(remain - candidate, nextCurr, counter);
+
+      // backtrack the changes, so that we can try another candidates
+      counter[nextCurr] = [candidate, freq];
+      comb.pop();
+    }
+  }
+
+  backtrack(target, 0, counterList);
+  return results;
+};
+
 
 let testArray = [10,1,2,7,6,1,5];
 let target = 8;
