@@ -37,12 +37,11 @@ function backtrack(comb, remain, curr, counter, results) {
     let candidate = entry[0];
     let freq = entry[1];
 
-    if (freq < 0) {
+    if (freq <= 0) {
       continue;
     }
 
     // add new element to the current combination
-    // console.log('result: ', results);
     comb.push(candidate);
     counter[nextCurr] = [candidate, freq - 1];
 
