@@ -31,7 +31,7 @@ function restoreHelper(currIp, s, pos, counter, results) {
       // or (counter === 4 && pos === s.length)
       // what we should do next is to continue to check the rest string.
 
-      // check whether remove the dot
+      // check whether to remove the dot
       if (pos + i < s.length) {
         currIp = currIp.substring(0, currIp.length - 1);
       }
