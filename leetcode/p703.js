@@ -3,15 +3,30 @@
  * @param {number[]} nums
  */
 var KthLargest = function(k, nums) {
-
+  this.array = nums.sort((a, b) => a - b);
+  this.k = k;
 };
 
 /**
+ * This method can be optimized to use binary heap
  * @param {number} val
  * @return {number}
  */
 KthLargest.prototype.add = function(val) {
-
+  if (!this.array.length) {
+    this.array.push(val);
+  }
+  for (let i = 0; i < this.array.length; ++i) {
+    if (val < this.array[i]) {
+      this.array.splice(i, 0, val);
+      break;
+    }
+    if (i === this.array.length - 1) {
+      this.array.push(val);
+      break;
+    }
+  }
+  return this.array[this.array.length - this.k];
 };
 
 /**
@@ -20,7 +35,7 @@ KthLargest.prototype.add = function(val) {
  * var param_1 = obj.add(val)
  */
 
-let kthLargest = new KthLargest(3, [4, 5, 8, 2]);
+let kthLargest = new KthLargest(1, []);
 let result = [];
 result.push(
   kthLargest.add(3),
