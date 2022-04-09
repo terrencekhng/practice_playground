@@ -6,7 +6,6 @@
 var exist = function(board, word) {
   let width = board[0].length;
   let height = board.length;
-  let subMatrix = new Array(width).fill(false);
   let matrix = [];
   for (let i = 0; i < height; ++i) {
     matrix[i] = new Array(width);
