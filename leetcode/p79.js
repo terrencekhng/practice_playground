@@ -23,6 +23,16 @@ var exist = function(board, word) {
   return false;
 };
 
+/**
+ *
+ * @param {number[][]} board
+ * @param {number[][]} matrix
+ * @param {number} left
+ * @param {number} right
+ * @param {number} pos
+ * @param {string} word
+ * @return {boolean}
+ */
 function backtrack(board, matrix, left, right, pos, word) {
   if (word[pos] !== board[left][right]) {
     return false;
