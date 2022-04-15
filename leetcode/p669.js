@@ -13,8 +13,24 @@
  * @return {TreeNode}
  */
 var trimBST = function(root, low, high) {
-
+  return trim(root, low, high);
 };
+
+function trim(node, low, high) {
+  if (!node) {
+    return node;
+  }
+  if (node.val > high) {
+    return trim(node.left, low, high);
+  }
+  if (node.val < low) {
+    return trim(node.right, low, high);
+  }
+  node.left = trim(node.left, low, high);
+  node.right = trim(node.right, low, high);
+
+  return node;
+}
 
 
 function TreeNode(val, left, right) {
@@ -23,5 +39,5 @@ function TreeNode(val, left, right) {
   this.right = (right===undefined ? null : right)
 }
 let root = new TreeNode(3, new TreeNode(0, null, new TreeNode(2, new TreeNode(1))), new TreeNode(4));
-let node = trimBST(root, 1, 3);
+let node = trimBST(root, 0, 1);
 console.log(node);
