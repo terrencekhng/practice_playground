@@ -11,7 +11,19 @@
  * @return {TreeNode}
  */
 var increasingBST = function(root) {
-
+  let result = new TreeNode();
+  let resultRoot = result;
+  function traverse(node) {
+    if (!node) {
+      return;
+    }
+    traverse(node.left);
+    result.right = new TreeNode(node.val);
+    result = result.right;
+    traverse(node.right);
+  }
+  traverse(root);
+  return resultRoot.right;
 };
 
 function TreeNode(val, left, right) {
