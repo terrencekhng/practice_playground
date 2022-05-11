@@ -11,6 +11,7 @@ var countVowelStrings = function(n) {
       return;
     }
 
+    // Terminator for the last element in the combination array
     if (next > 4) {
       return;
     }
